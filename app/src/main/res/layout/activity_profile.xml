@@ -21,23 +21,26 @@
             android:layout_marginBottom="30dp"/>
 
         <TextView
+            android:id="@+id/tvProfileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name: Celestine"
+            android:text="Name: ---"
             android:textSize="20sp"
             android:layout_marginBottom="20dp"/>
 
         <TextView
+            android:id="@+id/tvProfileCourse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Course: BIT"
+            android:text="Course: ---"
             android:textSize="20sp"
             android:layout_marginBottom="20dp"/>
 
         <TextView
+            android:id="@+id/tvProfileEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email: studenthub@gmail.com"
+            android:text="Email: ---"
             android:textSize="20sp"
             android:layout_marginBottom="30dp"/>
 

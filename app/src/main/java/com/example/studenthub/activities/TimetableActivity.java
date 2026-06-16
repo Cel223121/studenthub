@@ -1,20 +1,19 @@
-package com.example.studenthub;
+package com.example.studenthub.activities;
+
+import com.example.studenthub.R;
 
 import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class FeesActivity extends AppCompatActivity {
-
-    Button btnBack;
-
+public class TimetableActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fees);
+        setContentView(R.layout.activity_timetable);
 
-        btnBack = findViewById(R.id.btnBackFees);
+        Button btnBack = findViewById(R.id.btnBackTimetable);
         btnBack.setOnClickListener(v -> finish());
     }
 }

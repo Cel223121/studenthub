@@ -1,4 +1,7 @@
-package com.example.studenthub;
+package com.example.studenthub.activities;
+
+import com.example.studenthub.R;
+import com.example.studenthub.database.DatabaseHelper;
 
 import android.content.Intent;
 import android.os.Bundle;

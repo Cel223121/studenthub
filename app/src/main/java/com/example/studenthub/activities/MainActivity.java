@@ -1,4 +1,7 @@
-package com.example.studenthub;
+package com.example.studenthub.activities;
+
+import com.example.studenthub.R;
+import com.example.studenthub.database.DatabaseHelper;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
                     email, password);
 
             if(checkLogin) {
+
+                // Create Session
+                getSharedPreferences("user_session", MODE_PRIVATE)
+                        .edit()
+                        .putString("logged_email", email)
+                        .apply();
 
                 Toast.makeText(MainActivity.this,
                         "Login Successful",
