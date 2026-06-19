@@ -3,6 +3,7 @@ package com.example.studenthub.activities;
 import com.example.studenthub.R;
 import com.example.studenthub.database.DatabaseHelper;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,13 +17,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class SettingsActivity extends AppCompatActivity {
 
     Switch switchNotifications;
     Switch switchDarkMode;
 
-    Button btnChangePassword;
-    Button btnAbout;
+    Button btnChangePassword, btnClearSession, btnAbout;
     
     SharedPreferences settingsPref;
     DatabaseHelper db;
@@ -38,6 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
         switchNotifications = findViewById(R.id.switchNotifications);
         switchDarkMode = findViewById(R.id.switchDarkMode);
         btnChangePassword = findViewById(R.id.btnChangePassword);
+        btnClearSession = findViewById(R.id.btnClearSession);
         btnAbout = findViewById(R.id.btnAbout);
 
         // Load Current States
@@ -67,6 +71,21 @@ public class SettingsActivity extends AppCompatActivity {
         // Change Password Dialog
         btnChangePassword.setOnClickListener(v -> showChangePasswordDialog());
 
+        // Clear Session (Logout)
+        btnClearSession.setOnClickListener(v -> {
+            getSharedPreferences("user_session", MODE_PRIVATE)
+                    .edit()
+                    .clear()
+                    .apply();
+            
+            Toast.makeText(this, "Session Cleared. Logging out...", Toast.LENGTH_SHORT).show();
+            
+            Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        });
+
         // About Portal Dialog
         btnAbout.setOnClickListener(v -> showAboutDialog());
     }
@@ -82,18 +101,21 @@ public class SettingsActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
 
         btnSubmit.setOnClickListener(v -> {
-            String newPass = etNewPass.getText().toString().trim();
-            // Get logged in email from session
+            String rawPass = etNewPass.getText().toString().trim();
+            if (rawPass.isEmpty()) {
+                etNewPass.setError("Password cannot be empty");
+                return;
+            }
+
+            String hashedPass = hashPassword(rawPass);
             String email = getSharedPreferences("user_session", MODE_PRIVATE)
                            .getString("logged_email", "");
 
-            if (newPass.isEmpty()) {
-                etNewPass.setError("Password cannot be empty");
-            } else if (email.isEmpty()) {
+            if (email.isEmpty()) {
                 Toast.makeText(this, "Session Expired. Please Login again.", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             } else {
-                if (db.updatePassword(email, newPass)) {
+                if (db.updatePassword(email, hashedPass)) {
                     Toast.makeText(this, "Password Updated Successfully!", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 } else {
@@ -108,9 +130,24 @@ public class SettingsActivity extends AppCompatActivity {
     private void showAboutDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("About StudentHub Pro")
-                .setMessage("StudentHub Pro v2.0\n\nThe ultimate all-in-one portal for university students.\n\nKey Features:\n• Course Registration\n• Academic News\n• Real-time Live Portal\n• Advanced GPA Estimation\n\nBuilt for the modern student.")
+                .setMessage("StudentHub Pro v1.0\n\nDeveloper: Celestine Nguhi\n\nA professional Academic Management Portal designed for modern universities.\n\nDeveloped for Excellence.")
                 .setPositiveButton("Dismiss", null)
                 .setIcon(R.drawable.ic_book)
                 .show();
+    }
+
+    private String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : messageDigest) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return password;
     }
 }

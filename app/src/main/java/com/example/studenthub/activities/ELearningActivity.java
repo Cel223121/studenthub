@@ -2,9 +2,9 @@ package com.example.studenthub.activities;
 
 import com.example.studenthub.R;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,8 +21,16 @@ public class ELearningActivity extends AppCompatActivity {
         btnAssignments = findViewById(R.id.btnAssignments);
         btnVideos = findViewById(R.id.btnVideos);
 
-        btnNotes.setOnClickListener(v -> Toast.makeText(this, "Opening Lecture Notes...", Toast.LENGTH_SHORT).show());
-        btnAssignments.setOnClickListener(v -> Toast.makeText(this, "Loading Assignments...", Toast.LENGTH_SHORT).show());
-        btnVideos.setOnClickListener(v -> Toast.makeText(this, "Streaming Learning Videos...", Toast.LENGTH_SHORT).show());
+        btnNotes.setOnClickListener(v -> openResources("Lecture Notes"));
+        btnAssignments.setOnClickListener(v -> openResources("Assignments"));
+        btnVideos.setOnClickListener(v -> openResources("Learning Videos"));
+        
+        findViewById(R.id.toolbar).setOnClickListener(v -> finish());
+    }
+
+    private void openResources(String type) {
+        Intent intent = new Intent(this, ElearningResourceActivity.class);
+        intent.putExtra("type", type);
+        startActivity(intent);
     }
 }

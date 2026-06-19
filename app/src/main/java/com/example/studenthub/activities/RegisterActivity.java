@@ -11,9 +11,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText etName, etEmail, etCourse, etPassword;
+    EditText etName, etEmail, etCourse, etPassword, etYear, etPhone;
     Button btnRegister;
 
     DatabaseHelper databaseHelper;
@@ -26,6 +29,8 @@ public class RegisterActivity extends AppCompatActivity {
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
         etCourse = findViewById(R.id.etCourse);
+        etYear = findViewById(R.id.etYear);
+        etPhone = findViewById(R.id.etPhone);
         etPassword = findViewById(R.id.etPassword);
 
         btnRegister = findViewById(R.id.btnRegister);
@@ -37,10 +42,14 @@ public class RegisterActivity extends AppCompatActivity {
             String name = etName.getText().toString();
             String email = etEmail.getText().toString();
             String course = etCourse.getText().toString();
-            String password = etPassword.getText().toString();
+            String yearStr = etYear.getText().toString();
+            String phone = etPhone.getText().toString();
+            String password = hashPassword(
+                    etPassword.getText().toString()
+            );
 
-            if(name.isEmpty() || email.isEmpty()
-                    || course.isEmpty() || password.isEmpty()) {
+            if(name.isEmpty() || email.isEmpty() || course.isEmpty() 
+                    || yearStr.isEmpty() || phone.isEmpty() || password.isEmpty()) {
 
                 Toast.makeText(RegisterActivity.this,
                         "Fill all fields",
@@ -48,8 +57,9 @@ public class RegisterActivity extends AppCompatActivity {
 
             } else {
 
+                int year = Integer.parseInt(yearStr);
                 boolean inserted = databaseHelper.insertData(
-                        name, email, course, password);
+                        name, email, course, year, phone, password);
 
                 if(inserted) {
 
@@ -69,5 +79,28 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String hashPassword(String password) {
+
+        try {
+
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            byte[] messageDigest = md.digest(password.getBytes());
+
+            StringBuilder sb = new StringBuilder();
+
+            for (byte b : messageDigest) {
+                sb.append(String.format("%02x", b));
+            }
+
+            return sb.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return password;
     }
 }

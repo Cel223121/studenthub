@@ -99,7 +99,9 @@ public class ViewstudentActivity extends AppCompatActivity {
                     cursor.getString(0), // id
                     cursor.getString(1), // name
                     cursor.getString(2), // email
-                    cursor.getString(3)  // course
+                    cursor.getString(3), // course
+                    cursor.getInt(4),    // year
+                    cursor.getString(5)  // phone
             ));
         }
 

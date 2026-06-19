@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText etLoginEmail, etLoginPassword;
@@ -24,6 +27,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String savedEmail = getSharedPreferences(
+                "user_session",
+                MODE_PRIVATE)
+                .getString("logged_email", null);
+
+        if(savedEmail != null){
+
+            startActivity(new Intent(
+                    MainActivity.this,
+                    DashboardActivity.class));
+
+            finish();
+        }
 
         etLoginEmail = findViewById(R.id.etLoginEmail);
         etLoginPassword = findViewById(R.id.etLoginPassword);
@@ -43,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(v -> {
 
             String email = etLoginEmail.getText().toString();
-            String password = etLoginPassword.getText().toString();
+            String password = hashPassword(etLoginPassword.getText().toString());
 
             boolean checkLogin = databaseHelper.checkLogin(
                     email, password);
@@ -71,5 +88,20 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : messageDigest) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return password;
     }
 }

@@ -11,24 +11,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "StudentHub.db";
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 2);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE students(" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "name TEXT," +
-                "email TEXT," +
-                "course TEXT," +
-                "password TEXT)");
+        db.execSQL(
+                "CREATE TABLE students(" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "name TEXT," +
+                        "email TEXT UNIQUE," +
+                        "course TEXT," +
+                        "year INTEGER," +
+                        "phone TEXT," +
+                        "password TEXT)"
+        );
+
+        db.execSQL(
+                "CREATE TABLE attendance(" +
+                        "attendanceId INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "studentId INTEGER," +
+                        "date TEXT," +
+                        "status TEXT," +
+                        "FOREIGN KEY(studentId) REFERENCES students(id))"
+        );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        db.execSQL("DROP TABLE IF EXISTS attendance");
         db.execSQL("DROP TABLE IF EXISTS students");
+
         onCreate(db);
     }
 
@@ -36,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // INSERT
     // =========================
     public boolean insertData(String name, String email,
-                              String course, String password) {
+                              String course, int year, String phone, String password) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -44,6 +59,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("name", name);
         values.put("email", email);
         values.put("course", course);
+        values.put("year", year);
+        values.put("phone", phone);
         values.put("password", password);
 
         long result = db.insert("students", null, values);
@@ -87,7 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // UPDATE
     // =========================
     public boolean updateStudent(int id, String name,
-                                 String email, String course, String password) {
+                                 String email, String course, int year, String phone, String password) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -95,6 +112,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("name", name);
         values.put("email", email);
         values.put("course", course);
+        values.put("year", year);
+        values.put("phone", phone);
         
         if (password != null && !password.isEmpty()) {
             values.put("password", password);
@@ -140,5 +159,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int result = db.update("students", values, "email=?", new String[]{email});
         db.close();
         return result > 0;
+    }
+
+    // =========================
+    // SAVE ATTENDANCE
+    // =========================
+    public boolean saveAttendance(
+            int studentId,
+            String date,
+            String status) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("studentId", studentId);
+        values.put("date", date);
+        values.put("status", status);
+
+        long result = db.insert(
+                "attendance",
+                null,
+                values
+        );
+
+        return result != -1;
+    }
+
+    // =========================
+    // GET ATTENDANCE
+    // =========================
+    public Cursor getAttendanceRecords() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        return db.rawQuery(
+                "SELECT * FROM attendance",
+                null
+        );
+    }
+
+    public Cursor getAllAttendance() {
+
+        SQLiteDatabase db =
+                this.getReadableDatabase();
+
+        // Left Join to show attendance even if student details are missing
+        return db.rawQuery(
+                "SELECT s.name, a.date, a.status, a.studentId FROM attendance a " +
+                        "LEFT JOIN students s ON s.id = a.studentId " +
+                        "ORDER BY a.attendanceId DESC",
+                null);
     }
 }

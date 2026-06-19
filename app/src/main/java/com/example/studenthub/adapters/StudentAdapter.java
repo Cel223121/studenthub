@@ -60,6 +60,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             intent.putExtra("name", student.getName());
             intent.putExtra("email", student.getEmail());
             intent.putExtra("course", student.getCourse());
+            intent.putExtra("year", student.getYear());
+            intent.putExtra("phone", student.getPhone());
             v.getContext().startActivity(intent);
         });
 

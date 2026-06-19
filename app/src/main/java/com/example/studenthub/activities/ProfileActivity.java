@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    TextView tvName, tvCourse, tvEmail;
+    TextView tvName, tvCourse, tvEmail, tvPhone, tvYear;
     Button btnBack;
     DatabaseHelper db;
 
@@ -25,6 +25,8 @@ public class ProfileActivity extends AppCompatActivity {
         tvName = findViewById(R.id.tvProfileName);
         tvCourse = findViewById(R.id.tvProfileCourse);
         tvEmail = findViewById(R.id.tvProfileEmail);
+        tvPhone = findViewById(R.id.tvProfilePhone);
+        tvYear = findViewById(R.id.tvProfileYear);
         btnBack = findViewById(R.id.btnBackProfile);
 
         db = new DatabaseHelper(this);
@@ -48,10 +50,14 @@ public class ProfileActivity extends AppCompatActivity {
             String name = cursor.getString(1);
             String email = cursor.getString(2);
             String course = cursor.getString(3);
+            int year = cursor.getInt(4);
+            String phone = cursor.getString(5);
 
             tvName.setText("Name: " + name);
             tvEmail.setText("Email: " + email);
             tvCourse.setText("Course: " + course);
+            tvYear.setText("Year of Study: " + year);
+            tvPhone.setText("Phone: " + phone);
             
             cursor.close();
         } else {

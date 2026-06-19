@@ -43,6 +43,22 @@
             android:layout_marginBottom="15dp"/>
 
         <EditText
+            android:id="@+id/etYear"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Year of Study"
+            android:inputType="number"
+            android:layout_marginBottom="15dp"/>
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Phone Number"
+            android:inputType="phone"
+            android:layout_marginBottom="15dp"/>
+
+        <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="55dp"
