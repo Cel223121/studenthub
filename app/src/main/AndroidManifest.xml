@@ -42,7 +42,7 @@
             android:name=".activities.StudentRecordsActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ViewstudentActivity"
+            android:name=".activities.ViewStudentActivity"
             android:exported="false" />
         <activity
             android:name=".activities.AddStudentActivity"

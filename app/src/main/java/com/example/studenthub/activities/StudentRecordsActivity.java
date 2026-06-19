@@ -27,12 +27,12 @@ public class StudentRecordsActivity extends AppCompatActivity {
         });
 
         btnView.setOnClickListener(v -> {
-            startActivity(new Intent(this, ViewstudentActivity.class));
+            startActivity(new Intent(this, ViewStudentActivity.class));
         });
 
         btnSearch.setOnClickListener(v -> {
             // Opening view activity as it has the search bar integrated
-            startActivity(new Intent(this, ViewstudentActivity.class));
+            startActivity(new Intent(this, ViewStudentActivity.class));
         });
 
         findViewById(R.id.toolbar).setOnClickListener(v -> finish());

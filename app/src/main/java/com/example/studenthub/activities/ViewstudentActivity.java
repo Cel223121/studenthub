@@ -20,7 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class ViewstudentActivity extends AppCompatActivity {
+public class ViewStudentActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ArrayList<Student> list;
