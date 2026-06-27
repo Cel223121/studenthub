@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F6F9">
+    android:background="@color/backgroundColor">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:text="Fee Structure"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="#1E3A8A"
+            android:textColor="@color/colorPrimary"
             android:layout_marginBottom="30dp"/>
 
         <TextView
@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Semester 1 : Ksh 45,000"
             android:textSize="22sp"
+            android:textColor="@color/textPrimary"
             android:layout_marginBottom="20dp"/>
 
         <TextView
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content"
             android:text="Semester 2 : Ksh 42,000"
             android:textSize="22sp"
+            android:textColor="@color/textPrimary"
             android:layout_marginBottom="20dp"/>
 
         <TextView
@@ -38,6 +40,7 @@
             android:layout_height="wrap_content"
             android:text="Semester 3 : Ksh 40,000"
             android:textSize="22sp"
+            android:textColor="@color/textPrimary"
             android:layout_marginBottom="30dp"/>
 
         <Button
@@ -46,8 +49,8 @@
             android:layout_height="55dp"
             android:text="Back to Dashboard"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#64748B"/>
+            android:textColor="@color/textOnPrimary"
+            android:backgroundTint="@color/btnSecondaryColor"/>
 
     </LinearLayout>
 

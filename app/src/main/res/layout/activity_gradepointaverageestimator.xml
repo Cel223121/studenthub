@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FAFC">
+    android:background="@color/backgroundColor">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:text="GPA Calculator"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="#1E3A8A"
+            android:textColor="@color/colorPrimary"
             android:layout_marginBottom="20dp"/>
 
         <EditText
@@ -25,7 +25,11 @@
             android:layout_height="55dp"
             android:hint="CAT Marks (Out of 30)"
             android:inputType="numberDecimal"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:background="@drawable/card_bg"
+            android:paddingHorizontal="16dp"/>
 
         <EditText
             android:id="@+id/etAssignment"
@@ -33,7 +37,11 @@
             android:layout_height="55dp"
             android:hint="Assignment Marks (Out of 10)"
             android:inputType="numberDecimal"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:background="@drawable/card_bg"
+            android:paddingHorizontal="16dp"/>
 
         <EditText
             android:id="@+id/etExam"
@@ -41,13 +49,18 @@
             android:layout_height="55dp"
             android:hint="Exam Marks (Out of 60)"
             android:inputType="numberDecimal"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:background="@drawable/card_bg"
+            android:paddingHorizontal="16dp"/>
 
         <Button
             android:id="@+id/btnCalculate"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:text="CALCULATE GPA"
+            android:textColor="@color/textOnPrimary"
             android:backgroundTint="@color/btnPrimaryColor"/>
 
         <TextView
@@ -57,6 +70,7 @@
             android:text="Estimated Results Appear Here"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="@color/textPrimary"
             android:padding="15dp"
             android:layout_marginTop="25dp"/>
     </LinearLayout>

@@ -1,9 +1,15 @@
 package com.example.studenthub.activities;
 
 import com.example.studenthub.R;
+import com.example.studenthub.events.EventLogger;
+import com.example.studenthub.events.GestureHandler;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,10 +20,17 @@ public class DashboardActivity extends AppCompatActivity {
     MaterialCardView cardProfile, cardCourseReg, cardGpa, cardTimetable,
             cardELearning, cardAnnouncements, cardRecords, cardSettings, cardOnline, cardAttendance, cardAttendanceReport, btnLogout;
 
+    private GestureDetector gestureDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_activity);
+
+        EventLogger.logEvent("Dashboard Opened");
+
+        // Initialize Gesture Detector
+        gestureDetector = new GestureDetector(this, new GestureHandler(this));
 
         // Initialize Cards
         cardProfile = findViewById(R.id.cardProfile);
@@ -46,7 +59,20 @@ public class DashboardActivity extends AppCompatActivity {
         cardAttendance.setOnClickListener(v -> navigateTo(AttendanceActivity.class));
         cardAttendanceReport.setOnClickListener(v -> navigateTo(AttendanceReportActivity.class));
 
+        // Long Press Gesture Listeners for Cards
+        View.OnLongClickListener cardLongClickListener = v -> {
+            EventLogger.logEvent("Long Press Detected on Card");
+            Toast.makeText(DashboardActivity.this, "Long Press Detected", Toast.LENGTH_SHORT).show();
+            return true;
+        };
+
+        cardProfile.setOnLongClickListener(cardLongClickListener);
+        cardAnnouncements.setOnLongClickListener(cardLongClickListener);
+        cardRecords.setOnLongClickListener(cardLongClickListener);
+
         btnLogout.setOnClickListener(v -> {
+
+            EventLogger.logEvent("User Logout Triggered");
 
             getSharedPreferences(
                     "user_session",
@@ -65,7 +91,14 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        gestureDetector.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
+    }
+
     private void navigateTo(Class<?> targetActivity) {
+        EventLogger.logEvent("Navigating to: " + targetActivity.getSimpleName());
         startActivity(new Intent(this, targetActivity));
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }

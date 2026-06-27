@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary Colors (Brighter) -->
-    <color name="colorPrimary">#4F46E5</color>
-    <color name="colorPrimaryDark">#4338CA</color>
-    <color name="colorAccent">#818CF8</color>
+    <!-- Primary Colors (Brighter/Lighter) -->
+    <color name="colorPrimary">#6366F1</color>
+    <color name="colorPrimaryDark">#4F46E5</color>
+    <color name="colorAccent">#A5B4FC</color>
 
     <!-- Background and Surface -->
-    <color name="backgroundColor">#F9FAFB</color>
+    <color name="backgroundColor">#F8FAFC</color>
     <color name="surfaceColor">#FFFFFF</color>
     <color name="cardBackgroundColor">#FFFFFF</color>
 
     <!-- Text Colors -->
-    <color name="textPrimary">#111827</color>
-    <color name="textSecondary">#4B5563</color>
+    <color name="textPrimary">#1E293B</color>
+    <color name="textSecondary">#64748B</color>
     <color name="textOnPrimary">#FFFFFF</color>
 
     <!-- Status Colors -->
-    <color name="errorColor">#EF4444</color>
+    <color name="errorColor">#F43F5E</color>
     <color name="successColor">#10B981</color>
-    <color name="dividerColor">#E5E7EB</color>
+    <color name="dividerColor">#E2E8F0</color>
 
     <!-- Basic Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- Custom Button Colors -->
-    <color name="btnPrimaryColor">#2563EB</color>
-    <color name="btnSecondaryColor">#64748B</color>
-    <color name="btnSuccessColor">#059669</color>
+    <!-- Custom Button Colors (Brighter) -->
+    <color name="btnPrimaryColor">#3B82F6</color>
+    <color name="btnSecondaryColor">#94A3B8</color>
+    <color name="btnSuccessColor">#34D399</color>
+
+    <color name="avatarBackgroundColor">#DBEAFE</color>
+    <color name="badgeBackgroundColor">#DCFCE7</color>
 </resources>

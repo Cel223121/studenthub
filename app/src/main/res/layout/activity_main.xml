@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="#F5F7FA">
+    android:background="@color/backgroundColor">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,8 @@
             android:layout_height="80dp"
             android:src="@drawable/ic_book"
             android:layout_marginTop="40dp"
-            android:contentDescription="App Logo"/>
+            android:contentDescription="App Logo"
+            android:tint="@color/colorPrimary"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,7 +26,7 @@
             android:text="StudentHub"
             android:textSize="34sp"
             android:textStyle="bold"
-            android:textColor="#1E3A8A"
+            android:textColor="@color/colorPrimary"
             android:layout_marginTop="10dp"/>
 
         <TextView
@@ -33,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="Student Login"
             android:textSize="18sp"
-            android:textColor="#666666"
+            android:textColor="@color/textSecondary"
             android:layout_marginBottom="40dp"/>
 
         <EditText
@@ -43,7 +44,10 @@
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:importantForAutofill="no"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:background="@drawable/card_bg"/>
 
         <EditText
             android:id="@+id/etLoginPassword"
@@ -52,7 +56,10 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:importantForAutofill="no"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:background="@drawable/card_bg"/>
 
         <Button
             android:id="@+id/btnLogin"
@@ -60,7 +67,7 @@
             android:layout_height="55dp"
             android:text="LOGIN"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/textOnPrimary"
             android:backgroundTint="@color/btnPrimaryColor"/>
 
         <TextView
@@ -68,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Don't have an account? Register"
-            android:textColor="#2563EB"
+            android:textColor="@color/btnPrimaryColor"
             android:textSize="16sp"
             android:layout_marginTop="20dp"/>
 

@@ -2,9 +2,10 @@ package com.example.studenthub.activities;
 
 import com.example.studenthub.R;
 import com.example.studenthub.database.DatabaseHelper;
+import com.example.studenthub.events.EventLogger;
+import com.example.studenthub.events.KeyboardController;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,11 +20,14 @@ public class AddStudentActivity extends AppCompatActivity {
     TextInputLayout tilName, tilEmail, tilCourse, tilPassword, tilYear, tilPhone;
     Button btnSave, btnClear;
     DatabaseHelper db;
+    KeyboardController keyboardController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_add_student);
+
+        EventLogger.logEvent("Add Student Screen Opened");
 
         // Initialize Views
         etName = findViewById(R.id.etName);
@@ -44,6 +48,7 @@ public class AddStudentActivity extends AppCompatActivity {
         btnClear = findViewById(R.id.btnClearForm);
 
         db = new DatabaseHelper(this);
+        keyboardController = new KeyboardController(this);
 
         btnSave.setOnClickListener(v -> {
             if (validateForm()) {
@@ -54,16 +59,20 @@ public class AddStudentActivity extends AppCompatActivity {
                 String phone = etPhone.getText().toString();
                 String password = etPassword.getText().toString();
 
+                EventLogger.logEvent("Saving new student: " + email);
                 if (db.insertData(name, email, course, year, phone, password)) {
+                    EventLogger.logEvent("Student saved successfully");
                     Toast.makeText(this, "Student Added Successfully", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
+                    EventLogger.logEvent("Failed to save student");
                     Toast.makeText(this, "Addition Failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         btnClear.setOnClickListener(v -> {
+            EventLogger.logEvent("Clear Form Clicked");
             etName.setText("");
             etEmail.setText("");
             etCourse.setText("");
@@ -85,46 +94,50 @@ public class AddStudentActivity extends AppCompatActivity {
     private boolean validateForm() {
         boolean isValid = true;
 
-        if (TextUtils.isEmpty(etName.getText())) {
+        if (!keyboardController.validateInput(etName.getText().toString(), "Name")) {
             tilName.setError("Name is required");
             isValid = false;
         } else {
             tilName.setError(null);
         }
 
-        if (TextUtils.isEmpty(etEmail.getText())) {
-            tilEmail.setError("Email is required");
+        if (!keyboardController.validateEmail(etEmail.getText().toString())) {
+            tilEmail.setError("Valid email is required");
             isValid = false;
         } else {
             tilEmail.setError(null);
         }
 
-        if (TextUtils.isEmpty(etCourse.getText())) {
+        if (!keyboardController.validateInput(etCourse.getText().toString(), "Course")) {
             tilCourse.setError("Course is required");
             isValid = false;
         } else {
             tilCourse.setError(null);
         }
 
-        if (TextUtils.isEmpty(etYear.getText())) {
+        if (!keyboardController.validateInput(etYear.getText().toString(), "Year")) {
             tilYear.setError("Year is required");
             isValid = false;
         } else {
             tilYear.setError(null);
         }
 
-        if (TextUtils.isEmpty(etPhone.getText())) {
+        if (!keyboardController.validateInput(etPhone.getText().toString(), "Phone")) {
             tilPhone.setError("Phone is required");
             isValid = false;
         } else {
             tilPhone.setError(null);
         }
 
-        if (TextUtils.isEmpty(etPassword.getText())) {
+        if (!keyboardController.validateInput(etPassword.getText().toString(), "Password")) {
             tilPassword.setError("Password is required");
             isValid = false;
         } else {
             tilPassword.setError(null);
+        }
+
+        if (!isValid) {
+            EventLogger.logEvent("Form Validation Failed");
         }
 
         return isValid;

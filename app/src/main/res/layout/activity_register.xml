@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F6F9">
+    android:background="@color/backgroundColor">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:text="Student Registration"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="#1E3A8A"
+            android:textColor="@color/colorPrimary"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="30dp"/>
 
@@ -25,7 +25,11 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:hint="Full Name"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:background="@drawable/card_bg"
+            android:paddingHorizontal="16dp"/>
 
         <EditText
             android:id="@+id/etEmail"
@@ -33,14 +37,22 @@
             android:layout_height="55dp"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:background="@drawable/card_bg"
+            android:paddingHorizontal="16dp"/>
 
         <EditText
             android:id="@+id/etCourse"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:hint="Course"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:background="@drawable/card_bg"
+            android:paddingHorizontal="16dp"/>
 
         <EditText
             android:id="@+id/etYear"
@@ -48,7 +60,11 @@
             android:layout_height="55dp"
             android:hint="Year of Study"
             android:inputType="number"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:background="@drawable/card_bg"
+            android:paddingHorizontal="16dp"/>
 
         <EditText
             android:id="@+id/etPhone"
@@ -56,7 +72,11 @@
             android:layout_height="55dp"
             android:hint="Phone Number"
             android:inputType="phone"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:background="@drawable/card_bg"
+            android:paddingHorizontal="16dp"/>
 
         <EditText
             android:id="@+id/etPassword"
@@ -64,7 +84,11 @@
             android:layout_height="55dp"
             android:hint="Password"
             android:inputType="textPassword"
-            android:layout_marginBottom="25dp"/>
+            android:layout_marginBottom="25dp"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:background="@drawable/card_bg"
+            android:paddingHorizontal="16dp"/>
 
         <Button
             android:id="@+id/btnRegister"
@@ -72,7 +96,7 @@
             android:layout_height="55dp"
             android:text="REGISTER"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/textOnPrimary"
             android:backgroundTint="@color/btnPrimaryColor"/>
 
     </LinearLayout>
