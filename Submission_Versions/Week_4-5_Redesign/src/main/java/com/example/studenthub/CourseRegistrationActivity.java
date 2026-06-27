@@ -1,0 +1,12 @@
+package com.example.studenthub;
+
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class CourseRegistrationActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_courseregistration);
+    }
+}

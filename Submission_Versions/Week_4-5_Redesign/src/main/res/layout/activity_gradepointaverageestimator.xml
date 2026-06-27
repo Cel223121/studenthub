@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GPA Calculator"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#1E3A8A"
+            android:layout_marginBottom="20dp"/>
+
+        <EditText
+            android:id="@+id/etCat"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="CAT Marks (Out of 30)"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="15dp"/>
+
+        <EditText
+            android:id="@+id/etAssignment"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Assignment Marks (Out of 10)"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="15dp"/>
+
+        <EditText
+            android:id="@+id/etExam"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Exam Marks (Out of 60)"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/btnCalculate"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="CALCULATE GPA"/>
+
+        <TextView
+            android:id="@+id/txtResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Estimated Results Appear Here"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="15dp"
+            android:layout_marginTop="25dp"/>
+    </LinearLayout>
+
+</ScrollView>

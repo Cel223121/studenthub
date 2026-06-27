@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Portal Settings"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="System Info"
+            android:textStyle="bold"
+            android:textColor="@color/textSecondary"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Student Hub Pro\nVersion 1.0"
+            android:textSize="16sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Developer: Celestine Nguhi"
+            android:textSize="16sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Database Status: Connected"
+            android:textColor="@color/successColor"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="API Status: Connected"
+            android:textColor="@color/successColor"
+            android:textSize="14sp"
+            android:layout_marginBottom="24dp"/>
+
+        <Switch
+            android:id="@+id/switchNotifications"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enable Notifications"
+            android:textColor="@color/textPrimary"/>
+
+        <Switch
+            android:id="@+id/switchDarkMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dark Mode"
+            android:textColor="@color/textPrimary"
+            android:layout_marginTop="15dp"/>
+
+        <Button
+            android:id="@+id/btnChangePassword"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Change Password"
+            android:layout_marginTop="24dp"
+            android:textColor="@color/textOnPrimary"
+            android:backgroundTint="@color/btnPrimaryColor"/>
+
+        <Button
+            android:id="@+id/btnClearSession"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Clear Session"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/errorColor"
+            android:textColor="@color/white"/>
+
+        <Button
+            android:id="@+id/btnAbout"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="About StudentHub"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/textOnPrimary"
+            android:backgroundTint="@color/btnSecondaryColor"/>
+
+    </LinearLayout>
+
+</ScrollView>

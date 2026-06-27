@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fee Structure"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="30dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Semester 1 : Ksh 45,000"
+            android:textSize="22sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Semester 2 : Ksh 42,000"
+            android:textSize="22sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Semester 3 : Ksh 40,000"
+            android:textSize="22sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnBackFees"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Back to Dashboard"
+            android:textStyle="bold"
+            android:textColor="@color/textOnPrimary"
+            android:backgroundTint="@color/btnSecondaryColor"/>
+
+    </LinearLayout>
+
+</ScrollView>
