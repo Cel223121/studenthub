@@ -47,9 +47,7 @@ public class ViewStudentActivity extends AppCompatActivity {
         adapter = new StudentAdapter(list);
         recyclerView.setAdapter(adapter);
 
-        fab.setOnClickListener(v -> {
-            startActivity(new Intent(this, AddStudentActivity.class));
-        });
+        fab.setOnClickListener(v -> startActivity(new Intent(this, AddStudentActivity.class)));
 
         etSearchStudent.addTextChangedListener(new TextWatcher() {
             @Override
