@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -64,10 +65,17 @@ public class EditStudentActivity extends AppCompatActivity {
                 String phone = etPhone.getText().toString();
 
                 if (db.updateStudent(studentId, name, email, course, year, phone, "")) {
-                    Toast.makeText(this, "Updated Successfully", Toast.LENGTH_SHORT).show();
-                    finish();
+                    new AlertDialog.Builder(this)
+                            .setTitle("Student Updated")
+                            .setMessage("Student information updated successfully.")
+                            .setPositiveButton("OK", (dialog, which) -> finish())
+                            .show();
                 } else {
-                    Toast.makeText(this, "Update Failed", Toast.LENGTH_SHORT).show();
+                    new AlertDialog.Builder(this)
+                            .setTitle("Update Failed")
+                            .setMessage("Unable to update student information.\nPlease try again.")
+                            .setPositiveButton("OK", null)
+                            .show();
                 }
             }
         });
@@ -78,36 +86,48 @@ public class EditStudentActivity extends AppCompatActivity {
     private boolean validateForm() {
         boolean isValid = true;
 
-        if (TextUtils.isEmpty(etName.getText())) {
+        String name = etName.getText().toString().trim();
+        String email = etEmail.getText().toString().trim();
+        String course = etCourse.getText().toString().trim();
+        String year = etYear.getText().toString().trim();
+        String phone = etPhone.getText().toString().trim();
+
+        if (name.isEmpty()) {
             tilName.setError("Name is required");
             isValid = false;
         } else {
             tilName.setError(null);
         }
 
-        if (TextUtils.isEmpty(etEmail.getText())) {
+        if (email.isEmpty()) {
             tilEmail.setError("Email is required");
+            isValid = false;
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            tilEmail.setError("Enter a valid email address");
             isValid = false;
         } else {
             tilEmail.setError(null);
         }
 
-        if (TextUtils.isEmpty(etCourse.getText())) {
+        if (course.isEmpty()) {
             tilCourse.setError("Course is required");
             isValid = false;
         } else {
             tilCourse.setError(null);
         }
 
-        if (TextUtils.isEmpty(etYear.getText())) {
+        if (year.isEmpty()) {
             tilYear.setError("Year is required");
             isValid = false;
         } else {
             tilYear.setError(null);
         }
 
-        if (TextUtils.isEmpty(etPhone.getText())) {
+        if (phone.isEmpty()) {
             tilPhone.setError("Phone is required");
+            isValid = false;
+        } else if (phone.length() < 10) {
+            tilPhone.setError("Enter a valid phone number");
             isValid = false;
         } else {
             tilPhone.setError(null);

@@ -9,23 +9,36 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.card.MaterialCardView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class DashboardActivity extends AppCompatActivity {
 
     MaterialCardView cardProfile, cardCourseReg, cardGpa, cardTimetable,
-            cardELearning, cardAnnouncements, cardRecords, cardSettings, cardOnline, cardAttendance, cardAttendanceReport, btnLogout;
+            cardELearning, cardAnnouncements, cardRecords, cardSettings, cardOnline, cardAttendance, cardAttendanceReport, cardCampusExplorer, btnLogout;
 
     private GestureDetector gestureDetector;
+    private TextView txtDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_activity);
+
+        txtDate = findViewById(R.id.txtDate);
+
+        SimpleDateFormat sdf =
+                new SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault());
+
+        txtDate.setText(sdf.format(new Date()));
 
         EventLogger.logEvent("Dashboard Opened");
 
@@ -44,6 +57,7 @@ public class DashboardActivity extends AppCompatActivity {
         cardOnline = findViewById(R.id.cardOnline);
         cardAttendance = findViewById(R.id.cardAttendance);
         cardAttendanceReport = findViewById(R.id.cardAttendanceReport);
+        cardCampusExplorer = findViewById(R.id.cardCampusExplorer);
         btnLogout = findViewById(R.id.btnLogout);
 
         // Navigation with transitions
@@ -54,10 +68,11 @@ public class DashboardActivity extends AppCompatActivity {
         cardELearning.setOnClickListener(v -> navigateTo(ELearningActivity.class));
         cardAnnouncements.setOnClickListener(v -> navigateTo(AnnouncementsActivity.class));
         cardRecords.setOnClickListener(v -> navigateTo(StudentRecordsActivity.class));
-        cardSettings.setOnClickListener(v -> navigateTo(SettingsActivity.class));
+        cardSettings.setOnClickListener(v -> navigateTo(AboutActivity.class));
         cardOnline.setOnClickListener(v -> navigateTo(OnlineStudentsActivity.class));
         cardAttendance.setOnClickListener(v -> navigateTo(AttendanceActivity.class));
         cardAttendanceReport.setOnClickListener(v -> navigateTo(AttendanceReportActivity.class));
+        cardCampusExplorer.setOnClickListener(v -> navigateTo(CampusExplorerActivity.class));
 
         // Long Press Gesture Listeners for Cards
         View.OnLongClickListener cardLongClickListener = v -> {

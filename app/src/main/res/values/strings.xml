@@ -23,5 +23,6 @@
     <string name="hint_search">Search by Name or Course…</string>
     <string name="status_registered">Verified</string>
     <string name="hint_search_online">Live Portal Search…</string>
+    <string name="hint_search_student">Search student by name&#8230;</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
 </resources>

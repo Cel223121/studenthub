@@ -25,27 +25,41 @@
                 android:padding="24dp">
 
                 <TextView
+                    android:id="@+id/txtGreeting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Welcome Back,"
+                    android:text="Welcome Back!"
                     android:textColor="#E2E8F0"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
 
                 <TextView
+                    android:id="@+id/txtAppName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="StudentHub Pro"
+                    android:text="Student Hub"
                     android:textColor="@color/white"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
+                    android:textSize="30sp"
+                    android:textStyle="bold"/>
 
                 <TextView
+                    android:id="@+id/txtSubTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Your University Management Portal"
+                    android:text="Empowering Learning • Managing Success"
                     android:textColor="#CBD5E1"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Sunday, 05 July 2026"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="italic"
+                    android:textSize="13sp"/>
             </LinearLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -466,6 +480,43 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Reports"
+                        android:textColor="@color/textPrimary"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Campus Explorer Card (NEW) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardCampusExplorer"
+                style="@style/Widget.Material3.CardView.Elevated"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_info"
+                        app:tint="@color/colorAccent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Explorer"
                         android:textColor="@color/textPrimary"
                         android:textStyle="bold" />
                 </LinearLayout>

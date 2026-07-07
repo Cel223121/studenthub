@@ -21,8 +21,7 @@
             app:title="@string/title_student_records"
             app:titleTextColor="@color/textPrimary" />
 
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.Material3.CardView.Elevated"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -30,33 +29,13 @@
             app:cardCornerRadius="28dp"
             app:cardElevation="2dp">
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSearchStudent"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_search_student" />
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/hint_search"
-                    android:src="@drawable/ic_person"
-                    app:tint="@color/textSecondary" />
-
-                <EditText
-                    android:id="@+id/etSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:hint="@string/hint_search"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:paddingHorizontal="16dp"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.textfield.TextInputLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 

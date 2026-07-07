@@ -7,10 +7,14 @@ import com.example.studenthub.events.KeyboardController;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.security.MessageDigest;
@@ -20,6 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     EditText etName, etEmail, etCourse, etPassword, etYear, etPhone;
     Button btnRegister;
+    ProgressBar progressRegister;
 
     DatabaseHelper databaseHelper;
     KeyboardController keyboardController;
@@ -37,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
 
         btnRegister = findViewById(R.id.btnRegister);
+        progressRegister = findViewById(R.id.progressRegister);
 
         databaseHelper = new DatabaseHelper(this);
         keyboardController = new KeyboardController(this);
@@ -50,48 +56,105 @@ public class RegisterActivity extends AppCompatActivity {
 
         btnRegister.setOnClickListener(v -> {
 
-            String name = etName.getText().toString();
-            String email = etEmail.getText().toString();
-            String course = etCourse.getText().toString();
-            String yearStr = etYear.getText().toString();
-            String phone = etPhone.getText().toString();
+            String name = etName.getText().toString().trim();
+            String email = etEmail.getText().toString().trim();
+            String course = etCourse.getText().toString().trim();
+            String yearStr = etYear.getText().toString().trim();
+            String phone = etPhone.getText().toString().trim();
             String rawPassword = etPassword.getText().toString();
 
-            // Use KeyboardController for validation
-            if (!keyboardController.validateInput(name, "Name") ||
-                !keyboardController.validateEmail(email) ||
-                !keyboardController.validateInput(course, "Course") ||
-                !keyboardController.validateInput(yearStr, "Year") ||
-                !keyboardController.validateInput(phone, "Phone") ||
-                !keyboardController.validateInput(rawPassword, "Password")) {
-                
+            boolean valid = true;
+
+            if(name.isEmpty()){
+                etName.setError("Full name is required");
+                valid = false;
+            }
+
+            if(email.isEmpty()){
+                etEmail.setError("Email is required");
+                valid = false;
+            }
+            else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                etEmail.setError("Enter a valid email address");
+                valid = false;
+            }
+
+            if(course.isEmpty()){
+                etCourse.setError("Course is required");
+                valid = false;
+            }
+
+            if(yearStr.isEmpty()){
+                etYear.setError("Year is required");
+                valid = false;
+            }
+
+            if(phone.isEmpty()){
+                etPhone.setError("Phone number is required");
+                valid = false;
+            }
+            else if(phone.length() < 10){
+                etPhone.setError("Enter a valid phone number");
+                valid = false;
+            }
+
+            if(rawPassword.isEmpty()){
+                etPassword.setError("Password is required");
+                valid = false;
+            }
+            else if(rawPassword.length() < 6){
+                etPassword.setError("Password must contain at least 6 characters");
+                valid = false;
+            }
+
+            if(!valid){
                 EventLogger.logEvent("Registration Validation Failed");
                 return;
             }
 
-            String password = hashPassword(rawPassword);
-            int year = Integer.parseInt(yearStr);
-            
-            EventLogger.logEvent("Attempting to register user: " + email);
-            boolean inserted = databaseHelper.insertData(
-                    name, email, course, year, phone, password);
-
-            if(inserted) {
-                EventLogger.logEvent("Registration Successful for: " + email);
-                Toast.makeText(RegisterActivity.this,
-                        "Registration Successful",
-                        Toast.LENGTH_SHORT).show();
-
-                startActivity(new Intent(
-                        RegisterActivity.this,
-                        MainActivity.class));
-
-            } else {
-                EventLogger.logEvent("Registration Failed for: " + email);
-                Toast.makeText(RegisterActivity.this,
-                        "Registration Failed",
-                        Toast.LENGTH_SHORT).show();
+            if(databaseHelper.emailExists(email)){
+                etEmail.setError("This email is already registered");
+                EventLogger.logEvent("Registration Failed: Email already exists");
+                return;
             }
+
+            progressRegister.setVisibility(View.VISIBLE);
+            btnRegister.setEnabled(false);
+
+            new Handler().postDelayed(() -> {
+                String password = hashPassword(rawPassword);
+                int year = Integer.parseInt(yearStr);
+
+                EventLogger.logEvent("Attempting to register user: " + email);
+                boolean inserted = databaseHelper.insertData(
+                        name, email, course, year, phone, password);
+
+                progressRegister.setVisibility(View.GONE);
+                btnRegister.setEnabled(true);
+
+                if(inserted) {
+                    EventLogger.logEvent("Registration Successful for: " + email);
+                    new AlertDialog.Builder(RegisterActivity.this)
+                            .setTitle("Registration Complete")
+                            .setMessage("Your account has been created successfully.")
+                            .setPositiveButton("Login", (dialog, which) -> {
+                                startActivity(new Intent(
+                                        RegisterActivity.this,
+                                        MainActivity.class));
+                                finish();
+                            })
+                            .setCancelable(false)
+                            .show();
+
+                } else {
+                    EventLogger.logEvent("Registration Failed for: " + email);
+                    new AlertDialog.Builder(RegisterActivity.this)
+                            .setTitle("Registration Failed")
+                            .setMessage("Unable to create your account.\nPlease try again.")
+                            .setPositiveButton("OK", null)
+                            .show();
+                }
+            }, 1500);
         });
     }
 

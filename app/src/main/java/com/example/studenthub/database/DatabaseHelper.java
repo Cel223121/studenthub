@@ -11,7 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "StudentHub.db";
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 2);
+        super(context, DATABASE_NAME, null, 3);
     }
 
     @Override
@@ -36,11 +36,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "status TEXT," +
                         "FOREIGN KEY(studentId) REFERENCES students(id))"
         );
+
+        db.execSQL(
+                "CREATE TABLE campus_buildings(" +
+                        "buildingId INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "buildingName TEXT," +
+                        "imagePath TEXT," +
+                        "latitude TEXT," +
+                        "longitude TEXT," +
+                        "date TEXT," +
+                        "time TEXT)"
+        );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        db.execSQL("DROP TABLE IF EXISTS campus_buildings");
         db.execSQL("DROP TABLE IF EXISTS attendance");
         db.execSQL("DROP TABLE IF EXISTS students");
 
@@ -210,5 +222,97 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "LEFT JOIN students s ON s.id = a.studentId " +
                         "ORDER BY a.attendanceId DESC",
                 null);
+    }
+
+    // =========================
+    // SAVE CAMPUS BUILDING
+    // =========================
+    public boolean saveBuilding(
+            String buildingName,
+            String imagePath,
+            String latitude,
+            String longitude,
+            String date,
+            String time) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("buildingName", buildingName);
+        values.put("imagePath", imagePath);
+        values.put("latitude", latitude);
+        values.put("longitude", longitude);
+        values.put("date", date);
+        values.put("time", time);
+
+        long result = db.insert("campus_buildings", null, values);
+
+        db.close();
+
+        return result != -1;
+    }
+
+    // =========================
+    // GET ALL CAMPUS BUILDINGS
+    // =========================
+    public Cursor getAllBuildings() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        return db.rawQuery(
+                "SELECT * FROM campus_buildings ORDER BY buildingId DESC",
+                null
+        );
+    }
+
+    // =========================
+    // DELETE BUILDING
+    // =========================
+    public boolean deleteBuilding(int buildingId) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int result = db.delete(
+                "campus_buildings",
+                "buildingId=?",
+                new String[]{String.valueOf(buildingId)}
+        );
+
+        db.close();
+
+        return result > 0;
+    }
+
+    // =========================
+    // SEARCH STUDENTS
+    // =========================
+
+    public Cursor searchStudents(String keyword) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        return db.rawQuery(
+                "SELECT * FROM students WHERE name LIKE ?",
+                new String[]{"%" + keyword + "%"}
+        );
+    }
+
+    public boolean emailExists(String email){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+
+                "SELECT id FROM students WHERE email=?",
+
+                new String[]{email});
+
+        boolean exists = cursor.getCount() > 0;
+
+        cursor.close();
+
+        return exists;
+
     }
 }

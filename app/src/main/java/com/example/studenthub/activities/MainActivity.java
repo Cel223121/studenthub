@@ -7,11 +7,15 @@ import com.example.studenthub.events.KeyboardController;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.security.MessageDigest;
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     EditText etLoginEmail, etLoginPassword;
     Button btnLogin;
     TextView txtRegister;
+    ProgressBar progressLogin;
 
     DatabaseHelper databaseHelper;
     KeyboardController keyboardController;
@@ -50,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnLogin = findViewById(R.id.btnLogin);
         txtRegister = findViewById(R.id.txtRegister);
+        progressLogin = findViewById(R.id.progressLogin);
 
         databaseHelper = new DatabaseHelper(this);
         keyboardController = new KeyboardController(this);
@@ -69,44 +75,66 @@ public class MainActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(v -> {
 
-            String email = etLoginEmail.getText().toString();
+            String email = etLoginEmail.getText().toString().trim();
             String rawPassword = etLoginPassword.getText().toString();
 
-            // Validation using KeyboardController
-            if (!keyboardController.validateInput(email, "Email") ||
-                !keyboardController.validateInput(rawPassword, "Password")) {
-                EventLogger.logEvent("Login Validation Failed");
+            if(email.isEmpty()){
+                etLoginEmail.setError("Email is required");
                 return;
             }
 
-            String password = hashPassword(rawPassword);
-
-            EventLogger.logEvent("Login Attempt: " + email);
-            boolean checkLogin = databaseHelper.checkLogin(
-                    email, password);
-
-            if(checkLogin) {
-                EventLogger.logEvent("Login Successful: " + email);
-                // Create Session
-                getSharedPreferences("user_session", MODE_PRIVATE)
-                        .edit()
-                        .putString("logged_email", email)
-                        .apply();
-
-                Toast.makeText(MainActivity.this,
-                        "Login Successful",
-                        Toast.LENGTH_SHORT).show();
-
-                startActivity(new Intent(
-                        MainActivity.this,
-                        DashboardActivity.class));
-
-            } else {
-                EventLogger.logEvent("Login Failed: " + email);
-                Toast.makeText(MainActivity.this,
-                        "Invalid Email or Password",
-                        Toast.LENGTH_SHORT).show();
+            if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                etLoginEmail.setError("Invalid email address");
+                return;
             }
+
+            if(rawPassword.isEmpty()){
+                etLoginPassword.setError("Password is required");
+                return;
+            }
+
+            progressLogin.setVisibility(View.VISIBLE);
+            btnLogin.setEnabled(false);
+
+            new Handler().postDelayed(() -> {
+                String password = hashPassword(rawPassword);
+
+                EventLogger.logEvent("Login Attempt: " + email);
+                boolean checkLogin = databaseHelper.checkLogin(
+                        email, password);
+
+                progressLogin.setVisibility(View.GONE);
+                btnLogin.setEnabled(true);
+
+                if(checkLogin) {
+                    EventLogger.logEvent("Login Successful: " + email);
+                    // Create Session
+                    getSharedPreferences("user_session", MODE_PRIVATE)
+                            .edit()
+                            .putString("logged_email", email)
+                            .apply();
+
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Login Successful")
+                            .setMessage("Welcome to StudentHub Pro.")
+                            .setPositiveButton("Continue", (dialog, which) -> {
+                                startActivity(new Intent(
+                                        MainActivity.this,
+                                        DashboardActivity.class));
+                                finish();
+                            })
+                            .setCancelable(false)
+                            .show();
+
+                } else {
+                    EventLogger.logEvent("Login Failed: " + email);
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Login Failed")
+                            .setMessage("Incorrect email or password.\nPlease try again.")
+                            .setPositiveButton("OK", null)
+                            .show();
+                }
+            }, 1500);
         });
     }
 

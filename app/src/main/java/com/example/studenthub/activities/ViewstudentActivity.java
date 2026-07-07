@@ -27,7 +27,7 @@ public class ViewStudentActivity extends AppCompatActivity {
     DatabaseHelper db;
     StudentAdapter adapter;
     FloatingActionButton fab;
-    EditText etSearch;
+    EditText etSearchStudent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +36,12 @@ public class ViewStudentActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         fab = findViewById(R.id.fabAddStudent);
-        etSearch = findViewById(R.id.etSearch);
+        etSearchStudent = findViewById(R.id.etSearchStudent);
 
         db = new DatabaseHelper(this);
         list = new ArrayList<>();
 
-        loadStudents();
+        loadStudents("");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new StudentAdapter(list);
@@ -51,13 +51,14 @@ public class ViewStudentActivity extends AppCompatActivity {
             startActivity(new Intent(this, AddStudentActivity.class));
         });
 
-        etSearch.addTextChangedListener(new TextWatcher() {
+        etSearchStudent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filter(s.toString());
+                loadStudents(s.toString());
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -67,27 +68,22 @@ public class ViewStudentActivity extends AppCompatActivity {
         findViewById(R.id.toolbar).setOnClickListener(v -> finish());
     }
 
-    private void filter(String text) {
-        ArrayList<Student> filteredList = new ArrayList<>();
-        for (Student item : list) {
-            if (item.getName().toLowerCase().contains(text.toLowerCase()) || 
-                item.getCourse().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(item);
-            }
-        }
-        adapter.filterList(filteredList);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
-        loadStudents();
+        loadStudents("");
         adapter.notifyDataSetChanged();
     }
 
-    private void loadStudents() {
+    private void loadStudents(String keyword) {
         list.clear();
-        Cursor cursor = db.getAllStudents();
+        Cursor cursor;
+
+        if (keyword.isEmpty()) {
+            cursor = db.getAllStudents();
+        } else {
+            cursor = db.searchStudents(keyword);
+        }
 
         if (cursor.getCount() == 0) {
             cursor.close();

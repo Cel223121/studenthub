@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +27,9 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activities.CampusExplorerActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.ElearningResourceActivity"
             android:exported="false" />
@@ -74,6 +81,9 @@
         <activity
             android:name=".activities.DashboardActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.AboutActivity"
+            android:exported="false"/>
         <activity
             android:name=".activities.RegisterActivity"
             android:exported="false"

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studenthub.R;
@@ -83,8 +84,18 @@ public class AttendanceActivity extends AppCompatActivity {
         String selectedName = autoStudent.getText().toString().trim();
         String date = etDate.getText().toString().trim();
 
-        if(selectedName.isEmpty() || !studentMap.containsKey(selectedName)){
+        if(selectedName.isEmpty()){
+            Toast.makeText(this, "Select a student", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(!studentMap.containsKey(selectedName)){
             Toast.makeText(this, "Please select a valid student from the list", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(status.isEmpty()){
+            Toast.makeText(this, "Choose attendance status", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -92,10 +103,18 @@ public class AttendanceActivity extends AppCompatActivity {
         if (studentId != null) {
             boolean result = databaseHelper.saveAttendance(studentId, date, status);
             if(result){
-                Toast.makeText(this, "Attendance Saved for " + selectedName, Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(this)
+                        .setTitle("Attendance Saved")
+                        .setMessage("The attendance record for " + selectedName + " has been saved successfully.")
+                        .setPositiveButton("OK", null)
+                        .show();
                 autoStudent.setText(""); // Clear for next
             } else {
-                Toast.makeText(this, "Error saving record", Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(this)
+                        .setTitle("Save Failed")
+                        .setMessage("Unable to save attendance.\nPlease try again.")
+                        .setPositiveButton("OK", null)
+                        .show();
             }
         }
     }

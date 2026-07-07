@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -62,11 +63,18 @@ public class AddStudentActivity extends AppCompatActivity {
                 EventLogger.logEvent("Saving new student: " + email);
                 if (db.insertData(name, email, course, year, phone, password)) {
                     EventLogger.logEvent("Student saved successfully");
-                    Toast.makeText(this, "Student Added Successfully", Toast.LENGTH_SHORT).show();
-                    finish();
+                    new AlertDialog.Builder(this)
+                            .setTitle("Student Added")
+                            .setMessage("The student has been added successfully.")
+                            .setPositiveButton("OK", (dialog, which) -> finish())
+                            .show();
                 } else {
                     EventLogger.logEvent("Failed to save student");
-                    Toast.makeText(this, "Addition Failed", Toast.LENGTH_SHORT).show();
+                    new AlertDialog.Builder(this)
+                            .setTitle("Addition Failed")
+                            .setMessage("Unable to add student.\nPlease try again.")
+                            .setPositiveButton("OK", null)
+                            .show();
                 }
             }
         });
@@ -94,43 +102,59 @@ public class AddStudentActivity extends AppCompatActivity {
     private boolean validateForm() {
         boolean isValid = true;
 
-        if (!keyboardController.validateInput(etName.getText().toString(), "Name")) {
-            tilName.setError("Name is required");
+        String name = etName.getText().toString().trim();
+        String email = etEmail.getText().toString().trim();
+        String course = etCourse.getText().toString().trim();
+        String year = etYear.getText().toString().trim();
+        String phone = etPhone.getText().toString().trim();
+        String password = etPassword.getText().toString();
+
+        if (name.isEmpty()) {
+            tilName.setError("Student name required");
             isValid = false;
         } else {
             tilName.setError(null);
         }
 
-        if (!keyboardController.validateEmail(etEmail.getText().toString())) {
-            tilEmail.setError("Valid email is required");
+        if (email.isEmpty()) {
+            tilEmail.setError("Email is required");
+            isValid = false;
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            tilEmail.setError("Enter a valid email address");
             isValid = false;
         } else {
             tilEmail.setError(null);
         }
 
-        if (!keyboardController.validateInput(etCourse.getText().toString(), "Course")) {
+        if (course.isEmpty()) {
             tilCourse.setError("Course is required");
             isValid = false;
         } else {
             tilCourse.setError(null);
         }
 
-        if (!keyboardController.validateInput(etYear.getText().toString(), "Year")) {
+        if (year.isEmpty()) {
             tilYear.setError("Year is required");
             isValid = false;
         } else {
             tilYear.setError(null);
         }
 
-        if (!keyboardController.validateInput(etPhone.getText().toString(), "Phone")) {
+        if (phone.isEmpty()) {
             tilPhone.setError("Phone is required");
+            isValid = false;
+        } else if (phone.length() < 10) {
+            tilPhone.setError("Enter a valid phone number");
             isValid = false;
         } else {
             tilPhone.setError(null);
         }
 
-        if (!keyboardController.validateInput(etPassword.getText().toString(), "Password")) {
+        if (password.isEmpty()) {
             tilPassword.setError("Password is required");
+            isValid = false;
+        } else if (password.length() < 6) {
+            tilPassword.setError("Minimum 6 characters");
             isValid = false;
         } else {
             tilPassword.setError(null);
