@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">StudentHub Pro</string>
+    <string name="title_studenthub">StudentHub Pro</string>
+    <string name="subtitle_system">University Management System</string>
+    <string name="hint_username">Enter Username</string>
+    <string name="hint_password">Enter Password</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="desc_app_logo">Portal Logo</string>
+
+    <string name="first_fragment_label">Dashboard Overview</string>
+    <string name="second_fragment_label">Settings Overview</string>
+    <string name="next">Next</string>
+    <string name="previous">Back</string>
+
+    <string name="title_add_student">Enroll New Student</string>
+    <string name="subtitle_add_student">Enter academic details below to proceed</string>
+    <string name="hint_full_name">Student Full Name</string>
+    <string name="hint_email">Student Email Address</string>
+    <string name="hint_course">Registered Course</string>
+    <string name="btn_save_student">ENROLL STUDENT</string>
+    <string name="btn_clear_form">DISCARD CHANGES</string>
+    <string name="title_student_records">Academic Records</string>
+    <string name="hint_search">Search by Name or Course…</string>
+    <string name="status_registered">Verified</string>
+    <string name="hint_search_online">Live Portal Search…</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+</resources>

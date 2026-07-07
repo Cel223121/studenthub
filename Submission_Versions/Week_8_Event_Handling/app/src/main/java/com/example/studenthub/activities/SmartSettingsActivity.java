@@ -1,0 +1,1 @@
+// This file is no longer needed. Logic moved to SettingsActivity.java
