@@ -1,0 +1,30 @@
+Application Name: Student Hub
+
+Short Description:
+A modern university management application that enables students to manage attendance, academic records, campus exploration, announcements and other academic services.
+
+Full Description:
+Student Hub is an Android application developed to simplify university life by providing students with one centralized platform for managing academic activities.
+
+Key Features:
+• Secure Login and Registration
+• Student Records Management
+• Attendance Tracking
+• Attendance Reports
+• Course Registration
+• Campus Explorer
+• Camera Integration
+• GPS Location Services
+• Announcements
+• SQLite Database
+• Professional Dashboard
+• Material Design User Interface
+
+Student Hub improves communication, organization and access to important academic information while providing a secure and user-friendly experience.
+
+Category: Education
+Target Users: University Students
+Current Version: 1.0.0
+Minimum Android: Android 8.0 (API 26)
+Developer: Celestine Nguhi
+University: Mount Kenya University

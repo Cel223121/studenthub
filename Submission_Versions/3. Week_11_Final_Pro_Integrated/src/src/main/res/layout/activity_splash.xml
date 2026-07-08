@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC">
+
+    <!-- Logo -->
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dp"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="App Logo"/>
+
+    <!-- App Name -->
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="StudentHub Pro"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:textColor="#1E293B"/>
+
+    <!-- Tagline -->
+
+    <TextView
+        android:id="@+id/tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="Smart Campus Management"
+        android:textSize="17sp"
+        android:textColor="#64748B"/>
+
+    <!-- Motto -->
+
+    <TextView
+        android:id="@+id/motto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="Learn • Connect • Achieve"
+        android:textStyle="italic"
+        android:textColor="#2563EB"
+        android:textSize="15sp"/>
+
+    <!-- Loading -->
+
+    <ProgressBar
+        android:id="@+id/loading"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/title"
+        android:layout_marginTop="90dp"/>
+
+    <!-- Loading Text -->
+
+    <TextView
+        android:id="@+id/loading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loading"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="Loading..."
+        android:textSize="15sp"
+        android:textColor="#475569"/>
+
+    <!-- Version -->
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:text="Version 1.0"
+        android:textStyle="bold"
+        android:textColor="#94A3B8"/>
+
+</RelativeLayout>
